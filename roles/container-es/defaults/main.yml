@@ -5,3 +5,5 @@ es_ismaster: "true"
 es_isdata: "false"
 
 es_discovery_hosts: '["172.17.0.2", "172.17.0.3"]'
+
+es_service_after: "docker.service"
