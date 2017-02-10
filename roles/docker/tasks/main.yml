@@ -5,15 +5,20 @@
 - name: Docker - preparation - update apt
   apt: update_cache=yes
 
+- name: Docker - preparation - get kernel version
+  command: uname -r
+  register: tmp_kernel
+
 - name: Docker - preparation - install relevant packages
   apt: name={{ item }} state=present
   with_items:
     - curl
-    - linux-image-extra-$(uname -r)
+    - "linux-image-extra-{{ tmp_kernel.stdout }}"
     - linux-image-extra-virtual
     - apt-transport-https
     - software-properties-common
     - ca-certificates
+    - lsb-core
 
 - name: Docker - preparation - add GPG key
   shell: "curl -fsSL https://yum.dockerproject.org/gpg | sudo apt-key add -"
@@ -21,7 +26,7 @@
 
 - name: Docker - preparation - add repository 
   apt_repository:
-    repo: "deb https://apt.dockerproject.org/repo/ ubuntu-$(lsb_release -cs) main"
+    repo: "deb https://apt.dockerproject.org/repo/ ubuntu-xenial main"
     state: present
   when: docker_install_from_repo
 
