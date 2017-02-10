@@ -1,7 +1,7 @@
 [Unit]
 Description=Elasticsearch Docker container
 Requires=docker.service
-After=docker.service
+After={{ es_service_after }}
 
 [Service]
 Restart=always
