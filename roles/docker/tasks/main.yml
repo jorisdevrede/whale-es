@@ -1,0 +1,52 @@
+---
+
+# Install
+
+- name: Docker - preparation - update apt
+  apt: update_cache=yes
+
+- name: Docker - preparation - install relevant packages
+  apt: name={{ item }} state=present
+  with_items:
+    - curl
+    - linux-image-extra-$(uname -r)
+    - linux-image-extra-virtual
+    - apt-transport-https
+    - software-properties-common
+    - ca-certificates
+
+- name: Docker - preparation - add GPG key
+  shell: "curl -fsSL https://yum.dockerproject.org/gpg | sudo apt-key add -"
+  when: docker_install_from_repo
+
+- name: Docker - preparation - add repository 
+  apt_repository:
+    repo: "deb https://apt.dockerproject.org/repo/ ubuntu-$(lsb_release -cs) main"
+    state: present
+  when: docker_install_from_repo
+
+- name: Docker - preparation - update apt
+  apt: update_cache=yes
+  when: docker_install_from_repo
+
+- name: Docker - install
+  apt: name=docker-engine
+  when: docker_install_from_repo
+
+# Alternative installation using .deb
+
+- name: Docker - preparation - download deb
+  get_url:
+    url: https://apt.dockerproject.org/repo/pool/main/d/docker-engine/docker-engine_1.13.0-0~ubuntu-xenial_amd64.deb
+    dest: /tmp
+  when: not docker_install_from_repo
+
+- name: Docker - install
+  apt: deb=/tmp/docker-engine_1.13.0-0~ubuntu-xenial_amd64.deb
+  when: not docker_install_from_repo
+
+# Smoke test
+
+- name: Docker - smoke test
+  command: /usr/bin/docker run hello-world
+
