@@ -5,9 +5,9 @@ After=docker.service
 
 [Service]
 Restart=always
-ExecStart=/usr/bin/docker run --name master1 -v /docker/master1.yml:/usr/share/elasticsearch/config/elasticsearch.yml elasticsearch:2.4.4-alpine
-ExecStop=/usr/bin/docker stop -t 2 master1
-ExecStopPost=/usr/bin/docker rm -f master1
+ExecStart=/usr/bin/docker run --name {{ es_node_name }} -v /opt/docker/container-es/{{ es_node_name }}.yml:/usr/share/elasticsearch/config/elasticsearch.yml elasticsearch:2.4.4-alpine
+ExecStop=/usr/bin/docker stop -t 2 {{ es_node_name }}
+ExecStopPost=/usr/bin/docker rm -f {{ es_node_name }}
 
 [Install]
 WantedBy=default.target
