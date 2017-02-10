@@ -3,9 +3,9 @@
 - hosts: all
   become: yes
   
-  # TODO - Add Java role
   roles:
     - docker
     - {role: container-es, es_node_name: "node1", es_ismaster: "true", es_isdata: "false", es_service_after: "docker.service"}
     - {role: container-es, es_node_name: "node2", es_ismaster: "false", es_isdata: "true", es_service_after: "docker-node1.service"}
+    - java
     - elasticsearch
