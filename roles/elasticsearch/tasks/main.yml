@@ -1,7 +1,10 @@
 ---
 
+- name: Elasticsearch - create interactive group
+  group: name=ubuntu state=present
+  
 - name: Elasticsearch - create interactive user
-  user: name=ubuntu state=present
+  user: name=ubuntu group=ubuntu state=present
 
 - name: Elasticsearch - download 2.4.4 package
   get_url:
@@ -10,8 +13,8 @@
     mode: 0755
 
 - name: Elasticsearch - create root directory
-  file: path=/opt/elasticsearch state=directory owner=ubuntu group=ubuntu
+  file: path=/opt/elasticsearch state=directory mode=0755 owner=ubuntu group=ubuntu
 
 - name: Elasticsearch - install package
-  unarchive: src=/tmp/elasticsearch-2.4.4.tar.gz dest=/opt/elasticsearch remote_src=true
+  unarchive: src=/tmp/elasticsearch-2.4.4.tar.gz dest=/opt/elasticsearch remote_src=true mode=0755 owner=ubuntu group=ubuntu
   
