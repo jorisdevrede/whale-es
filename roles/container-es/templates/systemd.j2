@@ -1,0 +1,13 @@
+[Unit]
+Description=Elasticsearch Docker container
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+ExecStart=/usr/bin/docker run --name master1 -v /docker/master1.yml:/usr/share/elasticsearch/config/elasticsearch.yml elasticsearch:2.4.4-alpine
+ExecStop=/usr/bin/docker stop -t 2 master1
+ExecStopPost=/usr/bin/docker rm -f master1
+
+[Install]
+WantedBy=default.target
