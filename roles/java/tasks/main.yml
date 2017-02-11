@@ -26,21 +26,21 @@
   
 # Install JCE
 
-#- name: Java - download JCE
-#  get_url:
-#    headers: "Cookie: oraclelicense=accept-securebackup-cookie"
-#    url: http://download.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip
-#    dest: /tmp
-#    mode: 0755
+- name: Java - download JCE
+  get_url:
+    headers: "Cookie: oraclelicense=accept-securebackup-cookie"
+    url: http://download.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip
+    dest: /tmp
+    mode: 0755
 
-#- name: Java - install unzip
-#  apt: name=unzip state=present
+- name: Java - install unzip
+  apt: name=unzip state=present
 
-#- name: Java - unzip JCE
-#  unarchive: src=/tmp/jce_policy-8.zip dest=/tmp
+- name: Java - unzip JCE
+  unarchive: src=/tmp/jce_policy-8.zip dest=/tmp
   
-#- name: Java - copy local policy
-#  command: "cp /tmp/UnlimitedJCEPolicyJDK8/local_policy.jar /opt/jdk/jdk1.8.0_121/jre/lib/security/local_policy.jar"
+- name: Java - copy local policy
+  command: "cp /tmp/UnlimitedJCEPolicyJDK8/local_policy.jar /opt/jdk/jdk1.8.0_121/jre/lib/security/local_policy.jar"
 
-#- name: Java - copy US export policy
-#  command: "cp /tmp/UnlimitedJCEPolicyJDK8/US_export_policy.jar /opt/jdk/jdk1.8.0_121/jre/lib/security/US_export_policy.jar"
+- name: Java - copy US export policy
+  command: "cp /tmp/UnlimitedJCEPolicyJDK8/US_export_policy.jar /opt/jdk/jdk1.8.0_121/jre/lib/security/US_export_policy.jar"
