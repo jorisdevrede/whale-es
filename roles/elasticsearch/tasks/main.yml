@@ -14,15 +14,15 @@
     url: "https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.4.4/elasticsearch-2.4.4.tar.gz"
     dest: /tmp
     mode: 0755
-  when: "elasticsearch_version == '2.4.4'"
+  when: "es_version == '2.4.4'"
 
 - name: Elasticsearch - download 5.2.2 package
   get_url:
     url: "https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.2.2.tar.gz"
     dest: /tmp
     mode: 0755
-  when: "elasticsearch_version == '5.2.2'"
+  when: "es_version == '5.2.2'"
 
 - name: Elasticsearch - install package
-  unarchive: src="/tmp/elasticsearch-{{ elasticsearch_version }}.tar.gz" dest=/opt/elasticsearch remote_src=true mode=0755 owner=ubuntu group=ubuntu
+  unarchive: src="/tmp/elasticsearch-{{ es_version }}.tar.gz" dest=/opt/elasticsearch remote_src=true mode=0755 owner=ubuntu group=ubuntu
 
