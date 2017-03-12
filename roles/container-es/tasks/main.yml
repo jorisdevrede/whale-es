@@ -1,5 +1,8 @@
 ---
 
+- name: Container-ES - set vm.max_map_count
+  sysctl: name=vm.max_map_count value=262144
+
 - name: Container-ES - create config directory
   file: path=/opt/docker/container-es recurse=yes state=directory mode=0755 owner=root group=root
 
