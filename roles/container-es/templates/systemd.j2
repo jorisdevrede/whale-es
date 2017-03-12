@@ -5,7 +5,7 @@ After={{ es_service_after }}
 
 [Service]
 Restart=always
-ExecStart=/usr/bin/docker run --name {{ es_node_name }} -v /opt/docker/container-es/{{ es_node_name }}.yml:/usr/share/elasticsearch/config/elasticsearch.yml elasticsearch:2.4.4-alpine
+ExecStart=/usr/bin/docker run --name {{ es_node_name }} -v /opt/docker/container-es/{{ es_node_name }}.yml:/usr/share/elasticsearch/config/elasticsearch.yml elasticsearch:{{ es_version }}-alpine
 ExecStop=/usr/bin/docker stop -t 2 {{ es_node_name }}
 ExecStopPost=/usr/bin/docker rm -f {{ es_node_name }}
 
