@@ -6,6 +6,9 @@
 - name: "{{ es_node_name }} - create config directory"
   file: path="/opt/docker/containers/{{ es_node_name }}/config" state=directory mode=0755 owner=root group=root
 
+- name: "{{ es_node_name }} - create scripts directory"
+  file: path="/opt/docker/containers/{{ es_node_name }}/config/scripts" state=directory mode=0755 owner=root group=root
+
 - name: "{{ es_node_name }} - create logs directory"
   file: path="/opt/docker/containers/{{ es_node_name }}/logs" state=directory mode=0755 owner=root group=root
 
