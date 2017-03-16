@@ -1,0 +1,8 @@
+---
+
+- name: reload systemd
+  command: systemctl daemon-reload
+  notify: restart service
+
+- name: restart service
+  service: name="docker-{{ es_node_name }}" state=started enabled=yes
