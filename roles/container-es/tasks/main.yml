@@ -4,12 +4,18 @@
   sysctl: name=vm.max_map_count value=262144
 
 - name: Container-ES - create config directory
-  file: path=/opt/docker/container-es recurse=yes state=directory mode=0755 owner=root group=root
- 
+  file: path="/opt/docker/containers/{{ es_node_name }}/config" state=directory mode=0755 owner=root group=root
+
+- name: Container-ES - create logs directory
+  file: path="/opt/docker/containers/{{ es_node_name }}/logs" state=directory mode=0755 owner=root group=root
+
+- name: Container-ES - create data directory
+  file: path="/opt/docker/containers/{{ es_node_name }}/data" state=directory mode=0755 owner=root group=root
+
 - name: Container-ES - install as service (systemd)
   template: src=systemd.j2 dest="/etc/systemd/system/docker-{{ es_node_name }}.service" mode=0755 owner=root group=root
   notify: reload systemd
 
 - name: Container-ES - install elasticsearch.yml
-  template: src="elasticsearch.yml.j2" dest="/opt/docker/container-es/{{ es_node_name }}.yml" mode=0644 owner=root group=root
+  template: src="elasticsearch.yml.j2" dest="/opt/docker/containers/{{ es_node_name }}/config/elasticsearch.yml" mode=0644 owner=root group=root
   notify: restart service
