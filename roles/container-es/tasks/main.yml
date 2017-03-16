@@ -21,5 +21,11 @@
 - name: "{{ es_node_name }} - install elasticsearch.yml"
   template: src="elasticsearch.yml.j2" dest="/opt/docker/containers/{{ es_node_name }}/config/elasticsearch.yml" mode=0644 owner=root group=root
 
+- name: "{{ es_node_name }} - install jvm.options"
+  template: src="jvm.options.j2" dest="/opt/docker/containers/{{ es_node_name }}/config/jvm.options" mode=0644 owner=root group=root
+
+- name: "{{ es_node_name }} - install log4j2.properties"
+  template: src="log4j2.properties.j2" dest="/opt/docker/containers/{{ es_node_name }}/config/log4j2.properties" mode=0644 owner=root group=root
+
 - name: "{{ es_node_name }} - start service"
   service: name="docker-{{ es_node_name }}" state=restarted enabled=yes
