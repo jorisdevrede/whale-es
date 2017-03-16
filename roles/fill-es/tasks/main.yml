@@ -1,12 +1,17 @@
 ---
 
+- name: fill index - check port
+  wait_for:
+    host: 172.17.0.2
+    port: 9200
+
 - name: Verify ES cluster
   uri:
     url: http://172.17.0.2:9200
   register: uri_cluster
   until: uri_cluster.status == 200
   retries: 5
-  delay: 15
+  delay: 30
 
 - name: Verify index
   uri:
