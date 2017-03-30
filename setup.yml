@@ -9,5 +9,5 @@
     - {role: container-es, es_node_name: "node2", es_ismaster: "false", es_isdata: "true", es_service_after: "docker-node1.service"}
     - {role: container-es, es_node_name: "node3", es_ismaster: "false", es_isdata: "true", es_service_after: "docker-node1.service"}
     - fill-es
-#    - elasticsearch
-#    - java
+    - elasticsearch
+    - java
