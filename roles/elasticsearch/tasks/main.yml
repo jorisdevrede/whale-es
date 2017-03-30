@@ -10,6 +10,7 @@
 
 - name: Elasticsearch - create root directory
   file: path=/opt/elasticsearch state=directory mode=0755 owner=ubuntu group=ubuntu
+  when: training_solution
 
 - name: Elasticsearch - download 2.4.4 package
   get_url:
