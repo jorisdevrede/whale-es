@@ -2,9 +2,11 @@
 
 - name: Elasticsearch - create interactive group
   group: name=ubuntu state=present
+  when: training_solution
   
 - name: Elasticsearch - create interactive user
   user: name=ubuntu group=ubuntu state=present
+  when: training_solution
 
 - name: Elasticsearch - create root directory
   file: path=/opt/elasticsearch state=directory mode=0755 owner=ubuntu group=ubuntu
@@ -25,4 +27,4 @@
 
 - name: Elasticsearch - install package
   unarchive: src="/tmp/elasticsearch-{{ es_version }}.tar.gz" dest=/opt/elasticsearch remote_src=true mode=0755 owner=ubuntu group=ubuntu
-
+  when: training_solution
