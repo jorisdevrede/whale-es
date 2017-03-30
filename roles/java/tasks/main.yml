@@ -11,18 +11,23 @@
 
 - name: Java - create root directory
   file: path=/opt/jdk state=directory mode=0755 owner=root group=root
+  when: training_solution
 
 - name: Java - install package
   unarchive: src=/tmp/jdk-8u121-linux-x64.tar.gz dest=/opt/jdk
+  when: training_solution
 
 - name: Java - set alternative for java
   command: "update-alternatives --install /usr/bin/java java /opt/jdk/jdk1.8.0_121/bin/java 100"
+  when: training_solution
 
 - name: Java - set alternative for javac
   command: "update-alternatives --install /usr/bin/javac javac /opt/jdk/jdk1.8.0_121/bin/javac 100"
+  when: training_solution
   
 - name: Java - set JAVA_HOME
   lineinfile: dest=/etc/environment regexp="^JAVA_HOME=" line="JAVA_HOME=/opt/jdk/jdk1.8.0_121"
+  when: training_solution
   
 # Install JCE
 
@@ -38,9 +43,12 @@
 
 - name: Java - unzip JCE
   unarchive: src=/tmp/jce_policy-8.zip dest=/tmp
+  when: training_solution
   
 - name: Java - copy local policy
   command: "cp /tmp/UnlimitedJCEPolicyJDK8/local_policy.jar /opt/jdk/jdk1.8.0_121/jre/lib/security/local_policy.jar"
+  when: training_solution
 
 - name: Java - copy US export policy
   command: "cp /tmp/UnlimitedJCEPolicyJDK8/US_export_policy.jar /opt/jdk/jdk1.8.0_121/jre/lib/security/US_export_policy.jar"
+  when: training_solution
