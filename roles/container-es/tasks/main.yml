@@ -33,5 +33,5 @@
 - name: "{{ es_node_name }} - start service"
   service: name="docker-{{ es_node_name }}" state=restarted enabled=yes
   
-- name: "{{ es_node_name }} - check master
-  wait_for: host=172.17.0.2 port:9200
+- name: "{{ es_node_name }} - check master"
+  wait_for: host="172.17.0.2" port=9200
