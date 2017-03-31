@@ -9,7 +9,7 @@
   when: training_solution
 
 - name: Elasticsearch - create root directory
-  file: path=/opt/elasticsearch state=directory mode=0755 owner=ubuntu group=ubuntu
+  file: path=/opt/elasticsearch state=directory recurse=yes owner=ubuntu group=ubuntu
   when: training_solution
 
 - name: Elasticsearch - download 2.4.4 package
@@ -29,3 +29,36 @@
 - name: Elasticsearch - install package
   unarchive: src="/tmp/elasticsearch-{{ es_version }}.tar.gz" dest=/opt/elasticsearch remote_src=true mode=0755 owner=ubuntu group=ubuntu
   when: training_solution
+
+- name: Elasticsearch - create default symlink
+  file: src="/opt/elasticsearch/elasticsearch-{{ es_version }}"  dest=/op/elasticsearch/default mode=link
+  when: training_solution
+
+- name: Elasticsearch - copy elasticsearch.yml
+  copy: src=elasticsearch.yml dest=/opt/elasticsearch/default/config force=yes backup=yes owner=ubuntu group=ubuntu
+  when: training_solution
+
+- name: Elasticsearch - copy systemd script
+  copy: src=elasticsearch_training.service dest=/etc/systemd/system force=yes backup=yes owner=ubuntu group=ubuntu
+  when: training_solution
+
+- name: Elasticsearch - systemd reload
+  command: systemctl daemon-reload
+  when: training_solution
+
+# Only provide hints when not training_solution
+
+- name: Elasticsearch - create hints directory
+  file: path=/home/ubuntu/training_hints state=directory mode=0755 owner=ubuntu group=ubuntu
+  when: not training_solution
+
+- name: Elasticsearch - copy elasticsearch.yml
+  copy: src=elasticsearch.yml dest=/home/ubuntu/training_hints force=no owner=ubuntu group=ubuntu
+  when: not training_solution
+
+- name: Elasticsearch - copy systemd script
+  copy: src=elasticsearch_training.service dest=/home/ubuntu/training_hints force=no owner=ubuntu group=ubuntu
+  when: not training_solution
+
+
+  
