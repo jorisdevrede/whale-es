@@ -31,7 +31,7 @@
   when: training_solution
 
 - name: Elasticsearch - create default symlink
-  file: src=/opt/elasticsearch/default dest="/opt/elasticsearch/elasticsearch-{{ es_version }}" mode=link
+  file: path=/opt/elasticsearch/default src="/opt/elasticsearch/elasticsearch-{{ es_version }}" state=link owner=ubuntu group=ubuntu
   when: training_solution
 
 - name: Elasticsearch - copy elasticsearch.yml
