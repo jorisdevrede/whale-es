@@ -4,6 +4,7 @@ Description=Elasticsearch Training
 [Service]
 User=ubuntu
 Group=ubuntu
+LimitNOFILE=65536
 ExecStart=/opt/elasticsearch/default/bin/elasticsearch
 
 [Install]
