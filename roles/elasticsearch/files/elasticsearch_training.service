@@ -1,0 +1,10 @@
+[Unit]
+Description=Elasticsearch Training
+
+[Service]
+User=ubuntu
+Group=ubuntu
+ExecStart=/opt/elasticsearch/default/bin/elasticsearch
+
+[Install]
+WantedBy=default.target
