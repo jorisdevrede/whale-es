@@ -7,6 +7,14 @@
     dest: /tmp
     mode: 0755
 
+- name: Java - download JCE
+  get_url:
+    headers: "Cookie: oraclelicense=accept-securebackup-cookie"
+    url: http://download.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip
+    dest: /tmp
+    mode: 0755
+  ignore_errors: true
+
 # Install Java
 
 - name: Java - create root directory
@@ -30,13 +38,6 @@
   when: training_solution
   
 # Install JCE
-
-- name: Java - download JCE
-  get_url:
-    headers: "Cookie: oraclelicense=accept-securebackup-cookie"
-    url: http://download.oracle.com/otn-pub/java/jce/8/jce_policy-8.zip
-    dest: /tmp
-    mode: 0755
 
 - name: Java - install unzip
   apt: name=unzip state=present
