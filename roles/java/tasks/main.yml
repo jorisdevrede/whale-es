@@ -1,10 +1,13 @@
 ---
 
+- name: Java - create package directory
+  file: path=/home/ubuntu/packages mode=0777 owner=ubuntu group=ubuntu
+
 - name: Java - download package
   get_url:
     headers: "Cookie: oraclelicense=accept-securebackup-cookie"
     url: http://download.oracle.com/otn-pub/java/jdk/8u144-b01/090f390dda5b47b9b721c7dfaa008135/jdk-8u144-linux-x64.tar.gz
-    dest: /tmp
+    dest: /home/ubuntu/packages
     mode: 0755
 
 - name: Java - download JCE
@@ -22,7 +25,7 @@
   when: training_solution
 
 - name: Java - install package
-  unarchive: src=/tmp/jdk-8u144-linux-x64.tar.gz dest=/opt/jdk
+  unarchive: src=/home/ubuntu/packages/jdk-8u144-linux-x64.tar.gz dest=/opt/jdk
   when: training_solution
 
 - name: Java - set alternative for java
