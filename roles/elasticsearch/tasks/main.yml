@@ -13,7 +13,7 @@
   when: training_solution
 
 - name: Elasticsearch - create packages directory
-  file: path=/home/ubuntu/packages mode=0777 owner=ubuntu group=ubuntu
+  file: path=/home/ubuntu/packages state=directory mode=0777 owner=ubuntu group=ubuntu
 
 - name: Elasticsearch - download 2.4.4 package
   get_url:
