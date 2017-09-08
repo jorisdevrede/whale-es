@@ -1,0 +1,11 @@
+[Unit]
+Description=Kibana Training
+
+[Service]
+User=ubuntu
+Group=ubuntu
+LimitNOFILE=65536
+ExecStart=/opt/kibana/default/bin/kibana
+
+[Install]
+WantedBy=default.target
