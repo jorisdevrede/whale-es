@@ -12,8 +12,14 @@
   file: path=/opt/elasticsearch state=directory recurse=yes owner=ubuntu group=ubuntu
   when: training_solution
 
+- name: Elasticsearch Kibana - create root directory
+  file: path=/opt/kibana state=directory recurse=yes owner=ubuntu group=ubuntu
+  when: 
+  - training_solution
+  - "es_version == '5.2.2'"
+  
 - name: Elasticsearch - create packages directory
-  file: path=/home/ubuntu/packages mode=0777 owner=ubuntu group=ubuntu
+  file: path=/home/ubuntu/packages state=directory mode=0777 owner=ubuntu group=ubuntu
 
 - name: Elasticsearch - download 2.4.4 package
   get_url:
@@ -29,12 +35,29 @@
     mode: 0755
   when: "es_version == '5.2.2'"
 
+- name: Elasticsearch Kibana - download 5.2.2 package
+  get_url:
+    url: "https://artifacts.elastic.co/downloads/kibana/kibana-5.2.2-linux-x86_64.tar.gz"
+    dest: /home/ubuntu/packages
+    mode: 0755
+  when: "es_version == '5.2.2'"
+
 - name: Elasticsearch - install package
   unarchive: src="/home/ubuntu/packages/elasticsearch-{{ es_version }}.tar.gz" dest=/opt/elasticsearch remote_src=true mode=0755 owner=ubuntu group=ubuntu
   when: training_solution
 
+- name: Elasticsearch Kibana - install package
+  unarchive: src="/home/ubuntu/packages/kibana-{{ es_version }}.tar.gz" dest=/opt/kibana remote_src=true mode=0755 owner=ubuntu group=ubuntu
+  when: 
+  - training_solution
+  - "es_version == '5.2.2'"
+  
 - name: Elasticsearch - create default symlink
   file: path=/opt/elasticsearch/default src="/opt/elasticsearch/elasticsearch-{{ es_version }}" state=link owner=ubuntu group=ubuntu
+  when: training_solution
+
+- name: Elasticsearch Kibana - create default symlink
+  file: path=/opt/kibana/default src="/opt/kibana/kibana-{{ es_version }}" state=link owner=ubuntu group=ubuntu
   when: training_solution
 
 - name: Elasticsearch - copy elasticsearch.yml
@@ -43,6 +66,14 @@
 
 - name: Elasticsearch - copy systemd script
   copy: src=elasticsearch_training.service dest=/etc/systemd/system force=yes backup=yes owner=ubuntu group=ubuntu
+  when: training_solution
+
+- name: Elasticsearch Kibana - copy kibana.yml
+  copy: src=elasticsearch.yml dest=/opt/elasticsearch/default/config force=yes backup=yes owner=ubuntu group=ubuntu
+  when: training_solution
+
+- name: Elasticsearch Kibana - copy systemd script
+  copy: src=kibana_training.service dest=/etc/systemd/system force=yes backup=yes owner=ubuntu group=ubuntu
   when: training_solution
 
 - name: Elasticsearch - systemd reload
@@ -63,5 +94,12 @@
   copy: src=elasticsearch_training.service dest=/home/ubuntu/training_hints force=no owner=ubuntu group=ubuntu
   when: not training_solution
 
+- name: Elasticsearch Kibana - copy kibana.yml
+  copy: src=kibana.yml dest=/home/ubuntu/training_hints force=no owner=ubuntu group=ubuntu
+  when: not training_solution
+
+- name: Elasticsearch Kibana - copy systemd script
+  copy: src=kibana_training.service dest=/home/ubuntu/training_hints force=no owner=ubuntu group=ubuntu
+  when: not training_solution
 
   
