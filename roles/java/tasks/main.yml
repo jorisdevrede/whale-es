@@ -1,7 +1,12 @@
 ---
 
 - name: Java - create package directory
-  file: path=/home/ubuntu/packages mode=0777 owner=ubuntu group=ubuntu
+  file: 
+    path: /home/ubuntu/packages
+    state: directory
+    owner: ubuntu
+    group: ubuntu
+    mode: 0777
 
 - name: Java - download package
   get_url:
