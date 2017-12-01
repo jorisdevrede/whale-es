@@ -12,8 +12,13 @@
   file: path=/opt/elasticsearch state=directory recurse=yes owner=ubuntu group=ubuntu
   when: training_solution
 
-- name: Elasticsearch - create packages directory
-  file: path=/home/ubuntu/packages mode=0777 owner=ubuntu group=ubuntu
+- name: Elasticsearch - create package directory
+  file: 
+    path: /home/ubuntu/packages
+    state: directory
+    owner: ubuntu
+    group: ubuntu
+    mode: 0777
 
 - name: Elasticsearch - download 2.4.4 package
   get_url:
