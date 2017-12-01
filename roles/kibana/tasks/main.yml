@@ -1,0 +1,14 @@
+---
+
+- name: Kibana - create packages directory
+  file:
+    path: /home/ubuntu/packages
+    owner: ubuntu
+    group: ubuntu
+    mode: 0777
+
+- name: Kibana - download package
+  get_url:
+    url: "https://artifacts.elastic.co/downloads/kibana/kibana-5.2.2-linux-x86_64.tar.gz"
+    dest: /home/ubuntu/packages
+    mode: 0755
